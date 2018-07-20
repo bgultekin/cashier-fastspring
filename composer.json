@@ -1,6 +1,6 @@
 {
     "name": "bgultekin/cashier-fastspring",
-    "description": "Laravel Cashier provides an expressive, fluent interface to Fastspring's subscription billing services.",
+    "description": "Cashier Fastspring is a cashier-like laravel package which provides an interface to Fastspring subscription and payment services.",
     "keywords": ["laravel", "fastspring", "billing", "cashier"],
     "license": "MIT",
     "support": {
