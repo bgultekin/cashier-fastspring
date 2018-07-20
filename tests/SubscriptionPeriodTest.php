@@ -15,8 +15,8 @@ class SubscriptionPeriodTest extends TestCase
 
     public static function setUpBeforeClass()
     {
-        if (file_exists(__DIR__.'/../.env')) {
-            $dotenv = new \Dotenv\Dotenv(__DIR__.'/../');
+        if (file_exists(__DIR__.'/.env')) {
+            $dotenv = new \Dotenv\Dotenv(__DIR__);
             $dotenv->load();
         }
     }
