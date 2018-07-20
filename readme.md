@@ -6,7 +6,7 @@
 [badge_coverage]:       https://scrutinizer-ci.com/g/bgultekin/cashier-fastspring/badges/coverage.png?b=master
 [badge_build]:          https://scrutinizer-ci.com/g/bgultekin/cashier-fastspring/badges/build.png?b=master
 [badge_laravel]:        https://img.shields.io/badge/Laravel-5.x-orange.svg
-[badge_stylci]:         https://
+[badge_styleci]:         https://github.styleci.io/repos/141720975/shield?branch=master
 
 [link-contributors]:    https://github.com/bgultekin/cashier-fastspring/graphs/contributors
 [link-packagist]:       https://packagist.org/packages/bgultekin/cashier-fastspring
@@ -14,12 +14,14 @@
 [link-coverage]:        https://scrutinizer-ci.com/g/bgultekin/cashier-fastspring/?branch=master
 [link-license]:         https://github.com/bgultekin/cashier-fastspring/blob/master/LICENSE.md
 [link-laravel]:         https://laravel.com/
-[link-styleci]:         https://
+[link-styleci]:         https://github.styleci.io/repos/141720975
+
 
 [![Packagist][badge_package]][link-packagist]
 [![Packagist Release][badge_release]][link-packagist]
 [![Build Status][badge_build]][link-build]
 [![Coverage Status][badge_coverage]][link-coverage]
+[![Style CI][badge_styleci]][link-styleci]
 [![Laravel 5][badge_laravel]][link-laravel]
 [![License][badge_license]][link-license]
 
