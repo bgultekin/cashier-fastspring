@@ -2,14 +2,14 @@
 
 namespace Bgultekin\CashierFastspring\Tests\Traits;
 
+use Bgultekin\CashierFastspring\Fastspring\Fastspring;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
-use Bgultekin\CashierFastspring\Fastspring\Fastspring;
 
 trait Guzzle
 {
     /**
-     * Set mock responses for guzzle
+     * Set mock responses for guzzle.
      */
     protected function setMockResponsesAndHistory($responses, $history = null)
     {
@@ -22,9 +22,9 @@ trait Guzzle
             // Add the history middleware to the handler stack.
             $handler->push($history);
         }
-        
+
         Fastspring::setClientOptions([
-            'handler' => $handler
+            'handler' => $handler,
         ]);
     }
 }

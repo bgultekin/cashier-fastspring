@@ -11,12 +11,13 @@ class Base
     /**
      * Create a new event instance.
      *
-     * @param  string  $id
-     * @param  string  $type
-     * @param  boolean  $live
-     * @param  boolean  $processed
-     * @param  integer  $created
-     * @param  array  $data
+     * @param string $id
+     * @param string $type
+     * @param bool   $live
+     * @param bool   $processed
+     * @param int    $created
+     * @param array  $data
+     *
      * @return void
      */
     public function __construct($id, $type, $live, $processed, $created, $data)

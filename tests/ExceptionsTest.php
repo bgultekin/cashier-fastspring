@@ -2,8 +2,8 @@
 
 namespace Bgultekin\CashierFastspring\Tests;
 
-use Orchestra\Testbench\TestCase;
 use Bgultekin\CashierFastspring\Exceptions\NotImplementedException;
+use Orchestra\Testbench\TestCase;
 
 class ExceptionsTest extends TestCase
 {

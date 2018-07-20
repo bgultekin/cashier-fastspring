@@ -2,7 +2,6 @@
 
 namespace Bgultekin\CashierFastspring;
 
-use Carbon\Carbon;
 use Bgultekin\CashierFastspring\Fastspring\Fastspring;
 use GuzzleHttp\Exception\ClientException;
 
@@ -42,13 +41,14 @@ class SubscriptionBuilder
      * @var string|null
      */
     protected $coupon;
-    
+
     /**
      * Create a new subscription builder instance.
      *
-     * @param  mixed  $owner
-     * @param  string  $name
-     * @param  string  $plan
+     * @param mixed  $owner
+     * @param string $name
+     * @param string $plan
+     *
      * @return void
      */
     public function __construct($owner, $name, $plan)
@@ -61,7 +61,8 @@ class SubscriptionBuilder
     /**
      * Specify the quantity of the subscription.
      *
-     * @param  int  $quantity
+     * @param int $quantity
+     *
      * @return $this
      */
     public function quantity($quantity)
@@ -74,7 +75,8 @@ class SubscriptionBuilder
     /**
      * The coupon to apply to a new subscription.
      *
-     * @param  string  $coupon
+     * @param string $coupon
+     *
      * @return $this
      */
     public function withCoupon($coupon)
@@ -103,14 +105,14 @@ class SubscriptionBuilder
      */
     protected function getFastspringIdOfCustomer()
     {
-        if (! $this->owner->fastspring_id) {
+        if (!$this->owner->fastspring_id) {
             try {
                 $customer = $this->owner->createAsFastspringCustomer();
             } catch (ClientException $e) {
                 // we should get its id and save it
                 $response = $e->getResponse();
                 $content = json_decode($response->getBody()->getContents());
-                
+
                 // if email key exists in error node
                 // then we assume this error is related to that
                 // there is already an account with this email in fastspring-side
@@ -121,7 +123,7 @@ class SubscriptionBuilder
 
                     if ($response->accounts) {
                         $account = $response->accounts[0];
-                        
+
                         // save it to eloquent model
                         $this->owner->fastspring_id = $account->id;
                         $this->owner->save();
@@ -148,16 +150,16 @@ class SubscriptionBuilder
     {
         return array_filter([
             'account' => $fastspringId,
-            'items' => [
+            'items'   => [
                 [
-                    'product' => $this->plan,
-                    'quantity' => $this->quantity
-                ]
+                    'product'  => $this->plan,
+                    'quantity' => $this->quantity,
+                ],
             ],
             'tags' => [
-                'name' => $this->name
+                'name' => $this->name,
             ],
-            'coupon' => $this->coupon
+            'coupon' => $this->coupon,
         ]);
     }
 }

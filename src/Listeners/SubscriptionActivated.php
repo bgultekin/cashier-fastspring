@@ -31,7 +31,8 @@ class SubscriptionActivated extends Base
     /**
      * Handle the event.
      *
-     * @param  \Bgultekin\CashierFastspring\Events\SubscriptionActivated  $event
+     * @param \Bgultekin\CashierFastspring\Events\SubscriptionActivated $event
+     *
      * @return void
      */
     public function handle(Events\SubscriptionActivated $event)
@@ -75,9 +76,9 @@ class SubscriptionActivated extends Base
 
             $subscriptionPeriod = SubscriptionPeriod::firstOrCreate([
                 'subscription_id' => $subscription->id,
-                'type' => 'fastspring',
-                'start_date' => date('Y-m-d', $instruction['periodStartDateInSeconds']),
-                'end_date' => date('Y-m-d', $instruction['periodEndDateInSeconds'])
+                'type'            => 'fastspring',
+                'start_date'      => date('Y-m-d', $instruction['periodStartDateInSeconds']),
+                'end_date'        => date('Y-m-d', $instruction['periodEndDateInSeconds']),
             ]);
         }
     }

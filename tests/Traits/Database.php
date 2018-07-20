@@ -91,7 +91,7 @@ trait Database
             $table->datetime('subscription_period_start_date')->nullable();
             $table->datetime('subscription_period_end_date')->nullable();
             $table->timestamps();
-            
+
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
