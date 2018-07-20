@@ -1,0 +1,225 @@
+{
+"id":"{subscriptionId}",
+"subscription":"{subscriptionId}",
+"active":true,
+"state":"canceled",
+"changed":1507764858198,
+"changedValue":1507764858198,
+"changedInSeconds":1507764858,
+"changedDisplay":"10/11/17",
+"live":false,
+"currency":"USD",
+"account":{  
+    "id":"{accountId}",
+    "account":"{accountId}",
+    "contact":{  
+        "first":"Marcellus",
+        "last":"Walrus",
+        "email":"ne1@all.com",
+        "company":"Walrus Promotions Inc.",
+        "phone":null
+    },
+    "language":"en",
+    "country":"US",
+    "lookup":{  
+        "global":"TVWhu0iwQhKJyuhpT_2yMw"
+    },
+    "url":"https://furiousfalcon.onfastspring.com/account"
+},
+"product":{  
+    "product":"falcon-monthly-variation",
+    "parent":"falcon-monthly-subscriptions",
+    "display":{  
+        "en":"Falcon Monthly Subscription"
+    },
+    "description":{  
+        "summary":{  
+            "en":"Lorem ipsum dolor sit amet, consectetuer adipiscing elit."
+        },
+        "action":{  
+            "en":"CLICK TO SUBSCRIBE"
+        },
+        "full":{  
+            "en":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus."
+        }
+    },
+    "image":"https://d8y8nchqlnmka.cloudfront.net/VTetZH1kQD8/DHPIZXJ7Thw/falcon-box_x2.png",
+    "sku":"furious10",
+    "fulfillments":{  
+        "instructions":{  
+            "en":"Thank you for subscribing to *Falcon*.  To register, please launch the trial version and select **Help** | **Register Falcon**. Then, copy and paste the license key above into the **License Key** field and click **Submit**."
+        },
+        "falcon-monthly-variation_file_0":{  
+            "fulfillment":"falcon-monthly-variation_file_0",
+            "name":"File Download (FALCON4.exe)",
+            "applicability":"NON_REBILL_ONLY",
+            "display":null,
+            "url":null,
+            "size":null,
+            "behavior":"CURRENT",
+            "previous":[  
+            {  
+                "display":"Falcon.exe",
+                "size":5769,
+                "type":"application/octet-stream",
+                "modified":1507761217676
+            }
+            ]
+        },
+        "falcon-monthly-variation_license_1":{  
+            "fulfillment":"falcon-monthly-variation_license_1",
+            "name":"License Generator (Pre-defined List)",
+            "applicability":"NON_REBILL_ONLY"
+        }
+    },
+    "format":"digital",
+    "pricing":{  
+        "renew":"auto",
+        "interval":"month",
+        "intervalLength":1,
+        "quantityBehavior":"hide",
+        "quantityDefault":1,
+        "price":{  
+            "USD":14.95
+        },
+        "quantityDiscounts":{  
+            "1":{  
+            "USD":5.56
+            }
+        },
+        "dateLimitsEnabled":true,
+        "dateLimits":{  
+            "start":"2017-10-31 00:00",
+            "end":"2017-11-01 00:00"
+        },
+        "discountReason":{  
+            "en":"Halloween Special"
+        },
+        "discountDuration":1,
+        "reminderNotification":{  
+            "enabled":true,
+            "interval":"DAY",
+            "intervalLength":1
+        },
+        "overdueNotification":{  
+            "enabled":true,
+            "interval":"WEEK",
+            "intervalLength":1,
+            "amount":2
+        },
+        "cancellation":{  
+            "interval":"WEEK",
+            "intervalLength":1
+        }
+    }
+},
+"sku":"furious10",
+"display":"Falcon Monthly Subscription",
+"quantity":1,
+"adhoc":false,
+"autoRenew":true,
+"price":149.95,
+"priceDisplay":"$149.95",
+"priceInPayoutCurrency":149.95,
+"priceInPayoutCurrencyDisplay":"$149.95",
+"discount":0.0,
+"discountDisplay":"$0.00",
+"discountInPayoutCurrency":0.0,
+"discountInPayoutCurrencyDisplay":"$0.00",
+"subtotal":149.95,
+"subtotalDisplay":"$149.95",
+"subtotalInPayoutCurrency":149.95,
+"subtotalInPayoutCurrencyDisplay":"$149.95",
+"attributes":{  
+    "CustomAttribute1":"CustomValue1",
+    "CustomAttribute2":"CustomValue2"
+},
+"next":1515628800000,
+"nextValue":1515628800000,
+"nextInSeconds":1515628800,
+"nextDisplay":"1/11/18",
+"end":null,
+"endValue":null,
+"endInSeconds":null,
+"endDisplay":null,
+"canceledDate":1507852800000,
+"canceledDateValue":1507852800000,
+"canceledDateInSeconds":1507852800,
+"canceledDateDisplay":"10/13/17",
+"deactivationDate":1515542400000,
+"deactivationDateValue":1515542400000,
+"deactivationDateInSeconds":1515542400,
+"deactivationDateDisplay":"1/10/18",
+"sequence":1,
+"periods":null,
+"remainingPeriods":null,
+"begin":1507680000000,
+"beginValue":1507680000000,
+"beginInSeconds":1507680000,
+"beginDisplay":"10/11/17",
+"intervalUnit":"month",
+"intervalLength":3,
+"nextChargeCurrency":"USD",
+"nextChargeDate":1515628800000,
+"nextChargeDateValue":1515628800000,
+"nextChargeDateDisplay":"1/11/18",
+"nextChargeTotal":149.95,
+"nextChargeTotalDisplay":"$149.95",
+"nextChargeTotalInPayoutCurrency":149.95,
+"nextChargeTotalInPayoutCurrencyDisplay":"$149.95",
+"paymentReminder":{  
+    "intervalUnit":"day",
+    "intervalLength":1
+},
+"paymentOverdue":{  
+    "intervalUnit":"week",
+    "intervalLength":1,
+    "total":2,
+    "sent":0
+},
+"cancellationSetting":{  
+    "cancellation":"AFTER_LAST_NOTIFICATION",
+    "intervalUnit":"week",
+    "intervalLength":1
+},
+"instructions":[  
+    {  
+        "type":"regular",
+        "periodStartDate":null,
+        "periodStartDateValue":null,
+        "periodStartDateInSeconds":null,
+        "periodStartDateDisplay":null,
+        "periodEndDate":null,
+        "periodEndDateValue":null,
+        "periodEndDateInSeconds":null,
+        "periodEndDateDisplay":null,
+        "discountPercent":0,
+        "discountPercentValue":0,
+        "discountPercentDisplay":"0%",
+        "discountTotal":0.0,
+        "discountTotalDisplay":"$0.00",
+        "discountTotalInPayoutCurrency":0.0,
+        "discountTotalInPayoutCurrencyDisplay":"$0.00",
+        "unitDiscount":0.0,
+        "unitDiscountDisplay":"$0.00",
+        "unitDiscountInPayoutCurrency":0.0,
+        "unitDiscountInPayoutCurrencyDisplay":"$0.00",
+        "price":149.95,
+        "priceDisplay":"$149.95",
+        "priceInPayoutCurrency":149.95,
+        "priceInPayoutCurrencyDisplay":"$149.95",
+        "priceTotal":149.95,
+        "priceTotalDisplay":"$149.95",
+        "priceTotalInPayoutCurrency":149.95,
+        "priceTotalInPayoutCurrencyDisplay":"$149.95",
+        "unitPrice":149.95,
+        "unitPriceDisplay":"$149.95",
+        "unitPriceInPayoutCurrency":149.95,
+        "unitPriceInPayoutCurrencyDisplay":"$149.95",
+        "total":149.95,
+        "totalDisplay":"$149.95",
+        "totalInPayoutCurrency":149.95,
+        "totalInPayoutCurrencyDisplay":"$149.95"
+    }
+]
+}

@@ -1,0 +1,61 @@
+{
+    "name": "bgultekin/cashier-fastspring",
+    "description": "Laravel Cashier provides an expressive, fluent interface to Fastspring's subscription billing services.",
+    "keywords": ["laravel", "fastspring", "billing", "cashier"],
+    "license": "MIT",
+    "support": {
+        "issues": "https://github.com/bgultekin/cashier-fastspring/issues",
+        "source": "https://github.com/bgultekin/cashier-fastspring"
+    },
+    "authors": [
+        {
+            "name": "Bilal Gultekin",
+            "email": "bilal@gultekin.me"
+        }
+    ],
+    "require": {
+        "php": ">=7.1.3",
+        "illuminate/database": "~5.6",
+        "illuminate/support": "~5.6",
+        "nesbot/carbon": "~1.0",
+        "symfony/http-kernel": "~2.7|~3.0|~4.0",
+        "guzzlehttp/guzzle": "^6.0"
+    },
+    "require-dev": {
+        "illuminate/http": "~5.6",
+        "illuminate/routing": "~5.6",
+        "mockery/mockery": "~1.0",
+        "phpunit/phpunit": "~7.0",
+        "vlucas/phpdotenv": "~2.0",
+        "orchestra/testbench": "~3.6"
+    },
+    "autoload": {
+        "psr-4": {
+            "Bgultekin\\CashierFastspring\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Bgultekin\\CashierFastspring\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "8.0-dev"
+        },
+        "laravel": {
+            "providers": [
+                "Bgultekin\\CashierFastspring\\CashierServiceProvider"
+            ]
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --coverage-html=coverage"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
