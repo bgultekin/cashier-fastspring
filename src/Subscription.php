@@ -2,13 +2,11 @@
 
 namespace Bgultekin\CashierFastspring;
 
-use Exception;
-use LogicException;
-use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Model;
 use Bgultekin\CashierFastspring\Fastspring\Fastspring;
-use Bgultekin\CashierFastspring\Exceptions\NotImplementedException;
-use Bgultekin\CashierFastspring\SubscriptionPeriod;
+use Carbon\Carbon;
+use Exception;
+use Illuminate\Database\Eloquent\Model;
+use LogicException;
 
 class Subscription extends Model
 {
@@ -25,7 +23,7 @@ class Subscription extends Model
      * @var array
      */
     protected $dates = [
-        'created_at', 'updated_at', 'swap_at'
+        'created_at', 'updated_at', 'swap_at',
     ];
 
     /**
@@ -74,7 +72,7 @@ class Subscription extends Model
         if ($this->isFastspring()) {
             return $this->activeFastspringPeriodOrCreate();
         }
-        
+
         return $this->activeLocalPeriodOrCreate();
     }
 
@@ -147,9 +145,9 @@ class Subscription extends Model
             'type' => 'fastspring',
 
             // dates
-            'start_date' => $response[0]->beginPeriodDate,
-            'end_date' => $response[0]->endPeriodDate,
-            'subscription_id' => $this->id
+            'start_date'      => $response[0]->beginPeriodDate,
+            'end_date'        => $response[0]->endPeriodDate,
+            'subscription_id' => $this->id,
         ];
 
         // try to find or create
@@ -163,13 +161,14 @@ class Subscription extends Model
      * If there is no subscription period, it creates a subscription period started today
      *
      * @throws \Exception
+     *
      * @return \Bgultekin\CashierFastspring\SubscriptionPeriod
      */
     protected function createPeriodLocally()
     {
         $lastPeriod = $this->periods()->orderBy('end_date', 'desc')->first();
         $today = Carbon::today();
-        
+
         // there may be times subscriptionperiods not created more than
         // interval_length * interval_unit
         // For this kind of situations, we should fill the blank (actually we dont
@@ -184,7 +183,7 @@ class Subscription extends Model
                     $start_date = $lastPeriod
                         ? $lastPeriod->start_date->addMonthsNoOverflow($this->interval_length)
                         : Carbon::now();
-                        
+
                     $end_date = $start_date->copy()->addMonthsNoOverflow($this->interval_length)->subDay();
                     break;
 
@@ -192,7 +191,7 @@ class Subscription extends Model
                     $start_date = $lastPeriod
                         ? $lastPeriod->start_date->addWeeks($this->interval_length)
                         : Carbon::now();
-                        
+
                     $end_date = $start_date->copy()->addWeeks($this->interval_length)->subDay();
                     break;
 
@@ -201,21 +200,21 @@ class Subscription extends Model
                     $start_date = $lastPeriod
                         ? $lastPeriod->start_date->addYearsNoOverflow($this->interval_length)
                         : Carbon::now();
-                        
+
                     $end_date = $start_date->copy()->addYearsNoOverflow($this->interval_length)->subDay();
                     break;
 
                 default:
-                    throw new Exception("Unexcepted interval unit: ".$subscription->interval_unit);
+                    throw new Exception('Unexcepted interval unit: '.$subscription->interval_unit);
             }
 
             $subscriptionPeriodData = [
-                'type' => 'local',
-                'start_date' => $start_date->format('Y-m-d'),
-                'end_date' => $end_date->format('Y-m-d'),
-                'subscription_id' => $this->id
+                'type'            => 'local',
+                'start_date'      => $start_date->format('Y-m-d'),
+                'end_date'        => $end_date->format('Y-m-d'),
+                'subscription_id' => $this->id,
             ];
-            
+
             $lastPeriod = SubscriptionPeriod::firstOrCreate($subscriptionPeriodData);
         } while (!($today->greaterThanOrEqualTo($lastPeriod->start_date)
             && $today->lessThanOrEqualTo($lastPeriod->end_date)
@@ -233,7 +232,7 @@ class Subscription extends Model
     {
         $model = getenv('FASTSPRING_MODEL') ?: config('services.fastspring.model', 'App\\User');
 
-        $model = new $model;
+        $model = new $model();
 
         return $this->belongsTo(get_class($model), $model->getForeignKey());
     }
@@ -306,11 +305,11 @@ class Subscription extends Model
     }
 
     /**
-     * ALIASES
+     * ALIASES.
      */
 
     /**
-     * Alias of canceled
+     * Alias of canceled.
      *
      * @return bool
      */
@@ -372,13 +371,14 @@ class Subscription extends Model
     /**
      * Swap the subscription to a new Fastspring plan.
      *
-     * @param  string  $plan  New plan
-     * @param  bool  $prorate  Prorate
-     * @param  Integer  $quantity  Quantity of the product
-     * @param  array  $coupons  Coupons wanted to be applied
+     * @param string $plan     New plan
+     * @param bool   $prorate  Prorate
+     * @param int    $quantity Quantity of the product
+     * @param array  $coupons  Coupons wanted to be applied
+     *
+     * @throws \Exception
      *
      * @return object Response of fastspring
-     * @throws \Exception
      */
     public function swap($plan, $prorate, $quantity = 1, $coupons = [])
     {
@@ -392,7 +392,7 @@ class Subscription extends Model
                 // if prorate is true
                 // the plan is changed immediately
                 // no need to fill swap columns
-                
+
                 $this->plan = $plan;
                 $this->save();
             } else {
@@ -413,7 +413,7 @@ class Subscription extends Model
 
         // else
         // TODO: it might be better to create custom exception
-        throw new Exception("Swap operation failed. Response: ".json_encode($response));
+        throw new Exception('Swap operation failed. Response: '.json_encode($response));
     }
 
     /**
@@ -439,7 +439,7 @@ class Subscription extends Model
 
         // else
         // TODO: it might be better to create custom exception
-        throw new Exception("Cancel operation failed. Response: ".json_encode($response));
+        throw new Exception('Cancel operation failed. Response: '.json_encode($response));
     }
 
     /**
@@ -463,16 +463,16 @@ class Subscription extends Model
 
         // else
         // TODO: it might be better to create custom exception
-        throw new Exception("CancelNow operation failed. Response: ".json_encode($response));
+        throw new Exception('CancelNow operation failed. Response: '.json_encode($response));
     }
 
     /**
      * Resume the cancelled subscription.
      *
-     * @return object Response of fastspring
-     *
      * @throws \LogicException
      * @throws \Exception
+     *
+     * @return object Response of fastspring
      */
     public function resume()
     {
@@ -489,7 +489,7 @@ class Subscription extends Model
             // set null swap columns
             $this->swap_at = null;
             $this->swap_to = null;
-            
+
             $this->save();
 
             return $this;
@@ -497,6 +497,6 @@ class Subscription extends Model
 
         // else
         // TODO: it might be better to create custom exception
-        throw new Exception("Resume operation failed. Response: ".json_encode($response));
+        throw new Exception('Resume operation failed. Response: '.json_encode($response));
     }
 }

@@ -2,10 +2,8 @@
 
 namespace Bgultekin\CashierFastspring\Tests;
 
-use Illuminate\Contracts\Foundation\Application;
-use Orchestra\Testbench\TestCase;
 use Bgultekin\CashierFastspring\CashierServiceProvider;
-use Mockery;
+use Orchestra\Testbench\TestCase;
 
 class ServiceProviderTest extends TestCase
 {
@@ -17,7 +15,6 @@ class ServiceProviderTest extends TestCase
     /**
      * Tests.
      */
-
     public function testServiceProviderCanBeConstructed()
     {
         $this->assertInstanceOf(CashierServiceProvider::class, new CashierServiceProvider(app()));

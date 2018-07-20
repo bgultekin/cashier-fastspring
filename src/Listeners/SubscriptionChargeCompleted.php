@@ -2,10 +2,10 @@
 
 namespace Bgultekin\CashierFastspring\Listeners;
 
-use Carbon\Carbon;
 use Bgultekin\CashierFastspring\Events;
 use Bgultekin\CashierFastspring\Invoice;
 use Bgultekin\CashierFastspring\Subscription;
+use Carbon\Carbon;
 
 /**
  * This class is a listener for subscription charge completed events.
@@ -29,7 +29,8 @@ class SubscriptionChargeCompleted extends Base
     /**
      * Handle the event.
      *
-     * @param  \Bgultekin\CashierFastspring\Events\SubscriptionChargeCompleted  $event
+     * @param \Bgultekin\CashierFastspring\Events\SubscriptionChargeCompleted $event
+     *
      * @return void
      */
     public function handle(Events\SubscriptionChargeCompleted $event)
@@ -38,10 +39,10 @@ class SubscriptionChargeCompleted extends Base
         // try to find that order on the database
         // if not exists then create one
         $data = $event->data;
-        
+
         $invoice = Invoice::firstOrNew([
             'fastspring_id' => $data['order']['id'],
-            'type' => 'subscription'
+            'type'          => 'subscription',
         ]);
 
         // retrieve subscription to change state of it

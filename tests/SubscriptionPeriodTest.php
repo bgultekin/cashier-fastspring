@@ -2,15 +2,11 @@
 
 namespace Bgultekin\CashierFastspring\Tests;
 
-use LogicException;
-use Carbon\Carbon;
-use Orchestra\Testbench\TestCase;
+use Bgultekin\CashierFastspring\SubscriptionPeriod;
 use Bgultekin\CashierFastspring\Tests\Traits\Database;
 use Bgultekin\CashierFastspring\Tests\Traits\Model;
 use Illuminate\Database\Eloquent\Model as Eloquent;
-use Bgultekin\CashierFastspring\Subscription;
-use Bgultekin\CashierFastspring\SubscriptionPeriod;
-use GuzzleHttp\Psr7\Response;
+use Orchestra\Testbench\TestCase;
 
 class SubscriptionPeriodTest extends TestCase
 {
@@ -24,7 +20,6 @@ class SubscriptionPeriodTest extends TestCase
             $dotenv->load();
         }
     }
-
 
     public function setUp()
     {
@@ -42,7 +37,6 @@ class SubscriptionPeriodTest extends TestCase
     /**
      * Tests.
      */
-
     public function testSubscriptionPeriodCanBeConstructed()
     {
         $this->assertInstanceOf(SubscriptionPeriod::class, new SubscriptionPeriod());

@@ -2,18 +2,17 @@
 
 namespace Bgultekin\CashierFastspring\Tests;
 
-use Exception;
-use Orchestra\Testbench\TestCase;
+use Bgultekin\CashierFastspring\Billable;
+use Bgultekin\CashierFastspring\Exceptions\NotImplementedException;
+use Bgultekin\CashierFastspring\SubscriptionBuilder;
 use Bgultekin\CashierFastspring\Tests\Traits\Database;
 use Bgultekin\CashierFastspring\Tests\Traits\Guzzle;
 use Bgultekin\CashierFastspring\Tests\Traits\Model;
-use Illuminate\Database\Eloquent\Model as Eloquent;
-use Bgultekin\CashierFastspring\Fastspring\Fastspring;
-use Bgultekin\CashierFastspring\SubscriptionBuilder;
-use Bgultekin\CashierFastspring\Billable;
+use Exception;
 use GuzzleHttp\Middleware;
 use GuzzleHttp\Psr7\Response;
-use Bgultekin\CashierFastspring\Exceptions\NotImplementedException;
+use Illuminate\Database\Eloquent\Model as Eloquent;
+use Orchestra\Testbench\TestCase;
 
 /**
  * This class tests general process of cashier over Billable trait.
@@ -48,7 +47,6 @@ class CashierFastspringTest extends TestCase
     /**
      * Tests.
      */
-
     public function testSubscriptionBuilderCanBeConstructed()
     {
         $this->assertInstanceOf(SubscriptionBuilder::class, new SubscriptionBuilder('owner', 'name', 'plan'));
@@ -57,13 +55,13 @@ class CashierFastspringTest extends TestCase
     public function testCreateSession()
     {
         $this->setMockResponsesAndHistory([
-            new Response(200, [], json_encode(['id' => 'session_id']))
+            new Response(200, [], json_encode(['id' => 'session_id'])),
         ]);
 
         $user = $this->createUser([
-            'fastspring_id' => 'fastspring_id'
+            'fastspring_id' => 'fastspring_id',
         ]);
-        
+
         $session = $user->newSubscription('main', 'starter-plan')->create();
 
         $this->assertObjectHasAttribute('id', $session);
@@ -74,18 +72,18 @@ class CashierFastspringTest extends TestCase
         $transactions = [];
         $history = Middleware::history($transactions);
         $this->setMockResponsesAndHistory([
-            new Response(200, [], json_encode(['id' => 'session_id']))
+            new Response(200, [], json_encode(['id' => 'session_id'])),
         ], $history);
-        
+
         $user = $this->createUser([
-            'fastspring_id' => 'fastspring_id'
+            'fastspring_id' => 'fastspring_id',
         ]);
-        
+
         $session = $user->newSubscription('main', 'starter-plan')->withCoupon('free-php-coupon')->quantity(1)->create();
 
         $body = (string) $transactions[0]['request']->getBody();
         $requestParameters = json_decode($body, true);
-        
+
         $this->assertEquals(1, $requestParameters['items'][0]['quantity']);
         $this->assertEquals('main', $requestParameters['tags']['name']);
         $this->assertEquals('free-php-coupon', $requestParameters['coupon']);
@@ -95,11 +93,11 @@ class CashierFastspringTest extends TestCase
     public function testCreateAsFastspringCustomer()
     {
         $this->setMockResponsesAndHistory([
-            new Response(200, [], json_encode(['account' => 'fastspring_id']))
+            new Response(200, [], json_encode(['account' => 'fastspring_id'])),
         ]);
 
         $user = $this->createUser();
-        
+
         $account = $user->createAsFastspringCustomer();
 
         $this->assertObjectHasAttribute('account', $account);
@@ -110,11 +108,11 @@ class CashierFastspringTest extends TestCase
     {
         $this->setMockResponsesAndHistory([
             new Response(200, [], json_encode(['account' => 'fastspring_id'])),
-            new Response(200, [], json_encode(['hello' => 'world']))
+            new Response(200, [], json_encode(['hello' => 'world'])),
         ]);
 
         $user = $this->createUser();
-        
+
         $session = $user->newSubscription('main', 'starter-plan')->create();
 
         $this->assertObjectHasAttribute('hello', $session);
@@ -126,18 +124,18 @@ class CashierFastspringTest extends TestCase
         $this->setMockResponsesAndHistory([
             new Response(407, [], json_encode([
                 'error' => [
-                    'email' => 'Email is already in use.'
-                ]
+                    'email' => 'Email is already in use.',
+                ],
             ])),
             new Response(200, [], json_encode(['accounts' => [
-                    ['id' => 'fastspring_id']
-                ]
+                    ['id' => 'fastspring_id'],
+                ],
             ])),
-            new Response(200, [], json_encode(['hello' => 'world']))
+            new Response(200, [], json_encode(['hello' => 'world'])),
         ]);
 
         $user = $this->createUser(['fastspring_id' => null]);
-        
+
         $session = $user->newSubscription('main', 'starter-plan')->create();
 
         $this->assertObjectHasAttribute('hello', $session);
@@ -147,13 +145,13 @@ class CashierFastspringTest extends TestCase
     public function testUpdateAsFastspringCustomer()
     {
         $this->setMockResponsesAndHistory([
-            new Response(200, [], json_encode([['account' => 'fastspring_id']]))
+            new Response(200, [], json_encode([['account' => 'fastspring_id']])),
         ]);
 
         $user = $this->createUser([
-            'fastspring_id' => 'fastspring_id'
+            'fastspring_id' => 'fastspring_id',
         ]);
-        
+
         $account = $user->updateAsFastspringCustomer();
 
         $this->assertInternalType('array', $account);
@@ -165,26 +163,26 @@ class CashierFastspringTest extends TestCase
         $this->expectException(Exception::class);
 
         $this->setMockResponsesAndHistory([
-            new Response(200, [], json_encode([['account' => 'fastspring_id']]))
+            new Response(200, [], json_encode([['account' => 'fastspring_id']])),
         ]);
 
         $user = $this->createUser([
-            'fastspring_id' => null
+            'fastspring_id' => null,
         ]);
-        
+
         $account = $user->updateAsFastspringCustomer();
     }
 
     public function testAsFastspringCustomer()
     {
         $this->setMockResponsesAndHistory([
-            new Response(200, [], json_encode([['account' => 'fastspring_id']]))
+            new Response(200, [], json_encode([['account' => 'fastspring_id']])),
         ]);
 
         $user = $this->createUser([
-            'fastspring_id' => 'fastspring_id'
+            'fastspring_id' => 'fastspring_id',
         ]);
-        
+
         $account = $user->asFastspringCustomer();
 
         $this->assertInternalType('array', $account);
@@ -194,13 +192,13 @@ class CashierFastspringTest extends TestCase
     public function testGetAccountManagementURI()
     {
         $this->setMockResponsesAndHistory([
-            new Response(200, [], json_encode(['accounts' => [['url' => 'url']]]))
+            new Response(200, [], json_encode(['accounts' => [['url' => 'url']]])),
         ]);
 
         $user = $this->createUser([
-            'fastspring_id' => 'fastspring_id'
+            'fastspring_id' => 'fastspring_id',
         ]);
-        
+
         $url = $user->accountManagementURI();
 
         $this->assertEquals($url, 'url');
@@ -211,13 +209,13 @@ class CashierFastspringTest extends TestCase
         $this->expectException(Exception::class);
 
         $this->setMockResponsesAndHistory([
-            new Response(200, [], json_encode([['account' => 'fastspring_id']]))
+            new Response(200, [], json_encode([['account' => 'fastspring_id']])),
         ]);
 
         $user = $this->createUser([
-            'fastspring_id' => null
+            'fastspring_id' => null,
         ]);
-        
+
         $account = $user->asFastspringCustomer();
     }
 
@@ -225,7 +223,7 @@ class CashierFastspringTest extends TestCase
     public function testSubscription()
     {
         $user = $this->createUser([
-            'fastspring_id' => 'fastspring_id'
+            'fastspring_id' => 'fastspring_id',
         ]);
         $this->createSubscription($user);
 
@@ -260,11 +258,11 @@ class CashierFastspringTest extends TestCase
     public function testHasFastspringId()
     {
         $user = $this->createUser();
-        
+
         $user->hasFastspringId();
 
         $this->assertFalse($user->hasFastspringId());
-        
+
         $user->fastspring_id = 'fastspring_id';
         $user->save();
 
@@ -275,22 +273,22 @@ class CashierFastspringTest extends TestCase
     {
         $user = $this->createUser([
             'email' => 'first.middle@last.com',
-            'name' => 'First Middle Last'
+            'name'  => 'First Middle Last',
         ]);
 
         $user2 = $this->createUser([
             'email' => 'first@last.com',
-            'name' => 'First Last'
+            'name'  => 'First Last',
         ]);
 
         $user3 = $this->createUser([
             'email' => 'first@last.com',
-            'name' => 'First'
+            'name'  => 'First',
         ]);
 
         $user4 = $this->createUser([
             'email' => 'first.space.middle.space@last.com',
-            'name' => 'First  Middle  Last'
+            'name'  => 'First  Middle  Last',
         ]);
 
         $this->assertEquals($user->extractFirstName(), 'First Middle');
@@ -309,9 +307,9 @@ class CashierFastspringTest extends TestCase
         $this->expectException(NotImplementedException::class);
 
         $user = $this->createUser([
-            'fastspring_id' => 'fastspring_id'
+            'fastspring_id' => 'fastspring_id',
         ]);
-        
+
         $user->charge(1);
     }
 
@@ -320,9 +318,9 @@ class CashierFastspringTest extends TestCase
         $this->expectException(NotImplementedException::class);
 
         $user = $this->createUser([
-            'fastspring_id' => 'fastspring_id'
+            'fastspring_id' => 'fastspring_id',
         ]);
-        
+
         $user->refund(1);
     }
 }

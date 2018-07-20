@@ -2,22 +2,22 @@
 
 namespace Bgultekin\CashierFastspring\Http\Controllers;
 
+use Bgultekin\CashierFastspring\Events;
+use Bgultekin\CashierFastspring\Fastspring\Fastspring;
 use Exception;
-use Log;
-use Illuminate\Events\Dispatcher;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Event;
+use Log;
 use Symfony\Component\HttpFoundation\Response;
-use Bgultekin\CashierFastspring\Events;
-use Bgultekin\CashierFastspring\Fastspring\Fastspring;
 
 class WebhookController extends Controller
 {
     /**
      * Handle a Fastspring webhook call.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function handleWebhook(Request $request)
@@ -26,14 +26,14 @@ class WebhookController extends Controller
 
         $payload = json_decode($request->getContent(), true);
         Log::debug('payload', ['payload' => json_encode($payload)]);
-        
+
         // keep id of successfully managed events
         $successfulEvents = [];
-        
+
         $hmacSecret = getenv('FASTSPRING_HMAC_SECRET') === false
             ? config('services.fastspring.hmac_secret')
             : getenv('FASTSPRING_HMAC_SECRET');
-        
+
         Log::debug('hmac', ['hs' => $hmacSecret]);
 
         // we try to be sure about
@@ -51,7 +51,7 @@ class WebhookController extends Controller
                 // if not that means
                 // someone trying to fool you
                 // or you misconfigured your settings
-                throw new Exception("Message security violation, MAC is wrong!");
+                throw new Exception('Message security violation, MAC is wrong!');
             }
         }
 
@@ -81,6 +81,7 @@ class WebhookController extends Controller
                 // there may be not handled events
                 if (!class_exists($categoryEvent) || !class_exists($activityEvent)) {
                     Log::debug('No event error');
+
                     throw new Exception('There is no event for '.$event['type']);
                 }
 
@@ -102,7 +103,7 @@ class WebhookController extends Controller
                     $event['created'],
                     $event['data']
                 ));
-    
+
                 Event::fire(new $activityEvent(
                     $event['id'],
                     $event['type'],
@@ -111,11 +112,10 @@ class WebhookController extends Controller
                     $event['created'],
                     $event['data']
                 ));
-                
+
                 // add event id to successful events
                 $successfulEvents[] = $event['id'];
                 Log::debug('success', ['id' => $event['id']]);
-
             } catch (Exception $e) {
                 // log the exception
                 // and continue to iterate

@@ -30,7 +30,8 @@ class OrderCompleted extends Base
     /**
      * Handle the event.
      *
-     * @param  \Bgultekin\CashierFastspring\Events\OrderCompleted  $event
+     * @param \Bgultekin\CashierFastspring\Events\OrderCompleted $event
+     *
      * @return void
      */
     public function handle(Events\OrderCompleted $event)
@@ -39,10 +40,10 @@ class OrderCompleted extends Base
         // if not exists then create one
         $data = $event->data;
         $subscription = $data['items'][0]['subscription'];
-        
+
         $invoice = Invoice::firstOrNew([
             'fastspring_id' => $data['id'],
-            'type' => 'subscription'
+            'type'          => 'subscription',
         ]);
 
         $periodStartDate = $subscription['nextInSeconds'];
