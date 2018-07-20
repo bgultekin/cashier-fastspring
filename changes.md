@@ -1,1 +1,0 @@
-# Fastspring Cashier Change Log
