@@ -61,7 +61,7 @@ Cashier Fastspring is a cashier-like laravel package which provides interface to
 Add `bgultekin/cashier-fastspring` package to your dependencies.
 
 ```bash
-composer require "bgultekin/cashier-fastspring":"~1.0"
+composer require "bgultekin/cashier-fastspring"
 ```
 
 After requiring package, add service provider of this package to providers in `config/app.php`.
