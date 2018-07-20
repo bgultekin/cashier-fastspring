@@ -2,22 +2,17 @@
 
 namespace Bgultekin\CashierFastspring;
 
-use Exception;
 use Bgultekin\CashierFastspring\Exceptions\NotImplementedException;
-use Carbon\Carbon;
-use InvalidArgumentException;
-use Illuminate\Support\Collection;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Bgultekin\CashierFastspring\Fastspring\Fastspring;
+use Exception;
 
 trait Billable
 {
     /**
      * Make a "one off" charge on the customer for the given amount.
      *
-     * @param  int  $amount
-     * @param  array  $options
+     * @param int   $amount
+     * @param array $options
      *
      * @throws \InvalidArgumentException
      * @throws Exceptions\NotImplementedException
@@ -30,8 +25,8 @@ trait Billable
     /**
      * Refund a customer for a charge.
      *
-     * @param  string  $charge
-     * @param  array  $options
+     * @param string $charge
+     * @param array  $options
      *
      * @throws \InvalidArgumentException
      * @throws Exceptions\NotImplementedException
@@ -44,8 +39,9 @@ trait Billable
     /**
      * Begin creating a new subscription.
      *
-     * @param  string  $subscription
-     * @param  string  $plan
+     * @param string $subscription
+     * @param string $plan
+     *
      * @return \Bgultekin\CashierFastspring\SubscriptionBuilder
      */
     public function newSubscription($subscription, $plan)
@@ -56,8 +52,9 @@ trait Billable
     /**
      * Determine if the subscription is on trial.
      *
-     * @param  string  $subscription
-     * @param  string|null  $plan
+     * @param string      $subscription
+     * @param string|null $plan
+     *
      * @return bool
      */
     public function onTrial($subscription = 'default', $plan = null)
@@ -75,8 +72,9 @@ trait Billable
     /**
      * Determine if the model has a given subscription.
      *
-     * @param  string  $subscription
-     * @param  string|null  $plan
+     * @param string      $subscription
+     * @param string|null $plan
+     *
      * @return bool
      */
     public function subscribed($subscription = 'default', $plan = null)
@@ -98,7 +96,8 @@ trait Billable
     /**
      * Get a subscription instance by name.
      *
-     * @param  string  $subscription
+     * @param string $subscription
+     *
      * @return \Bgultekin\CashierFastspring\Subscription|null
      */
     public function subscription($subscription = 'default')
@@ -132,15 +131,16 @@ trait Billable
     /**
      * Determine if the model is actively subscribed to one of the given plans.
      *
-     * @param  array|string  $plans
-     * @param  string  $subscription
+     * @param array|string $plans
+     * @param string       $subscription
+     *
      * @return bool
      */
     public function subscribedToPlan($plans, $subscription = 'default')
     {
         $subscription = $this->subscription($subscription);
 
-        if (! $subscription || ! $subscription->valid()) {
+        if (!$subscription || !$subscription->valid()) {
             return false;
         }
 
@@ -156,12 +156,13 @@ trait Billable
     /**
      * Determine if the entity is on the given plan.
      *
-     * @param  string  $plan
+     * @param string $plan
+     *
      * @return bool
      */
     public function onPlan($plan)
     {
-        return ! is_null($this->subscriptions->first(function ($value) use ($plan) {
+        return !is_null($this->subscriptions->first(function ($value) use ($plan) {
             return $value->plan === $plan && $value->valid();
         }));
     }
@@ -173,7 +174,7 @@ trait Billable
      */
     public function hasFastspringId()
     {
-        return ! is_null($this->fastspring_id);
+        return !is_null($this->fastspring_id);
     }
 
     /**
@@ -191,23 +192,24 @@ trait Billable
     /**
      * Create a Fastspring customer for the given user model.
      *
-     * @param  array  $options
+     * @param array $options
+     *
      * @return object
      */
     public function createAsFastspringCustomer(array $options = [])
     {
         $options = empty($options) ? [
             'contact' => [
-                'first' => $this->extractFirstName(),
-                'last' => $this->extractLastName(),
-                'email' => $this->email,
+                'first'   => $this->extractFirstName(),
+                'last'    => $this->extractLastName(),
+                'email'   => $this->email,
                 'company' => $this->company,
-                'phone' => $this->phone
+                'phone'   => $this->phone,
             ],
             'language' => $this->language,
-            'country' => $this->country
+            'country'  => $this->country,
         ] : $options;
-        
+
         // Here we will create the customer instance on Fastspring and store the ID of the
         // user from Fastspring. This ID will correspond with the Fastspring user instances
         // and allow us to retrieve users from Fastspring later when we need to work.
@@ -223,7 +225,8 @@ trait Billable
     /**
      * Update the related account on the Fastspring-side the given user model.
      *
-     * @param  array  $options
+     * @param array $options
+     *
      * @return object
      */
     public function updateAsFastspringCustomer(array $options = [])
@@ -236,14 +239,14 @@ trait Billable
 
         $options = empty($options) ? [
             'contact' => [
-                'first' => $this->extractFirstName(),
-                'last' => $this->extractLastName(),
-                'email' => $this->email,
+                'first'   => $this->extractFirstName(),
+                'last'    => $this->extractLastName(),
+                'email'   => $this->email,
                 'company' => $this->company,
-                'phone' => $this->phone
+                'phone'   => $this->phone,
             ],
             'language' => $this->language,
-            'country' => $this->country
+            'country'  => $this->country,
         ] : $options;
 
         // update
@@ -277,14 +280,14 @@ trait Billable
     {
         $parted = explode(' ', $this->name);
         $parted = array_filter($parted);
-        
+
         if (count($parted) == 1) {
             return $parted[0];
         }
 
         // get rid of the lastname
         array_pop($parted);
-        
+
         // implode rest of it, so there may be more than one name
         return implode(' ', $parted);
     }
@@ -298,7 +301,7 @@ trait Billable
     {
         $parted = explode(' ', $this->name);
         $parted = array_filter($parted);
-        
+
         if (count($parted) == 1) {
             // unfortunately we should do this
             // because Fastspring create account API doesn't work without last name

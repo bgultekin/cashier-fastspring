@@ -6,5 +6,4 @@ use BadMethodCallException;
 
 class NotImplementedException extends BadMethodCallException
 {
-
 }

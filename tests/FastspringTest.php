@@ -2,12 +2,12 @@
 
 namespace Bgultekin\CashierFastspring\Tests;
 
-use Orchestra\Testbench\TestCase;
 use Bgultekin\CashierFastspring\Fastspring\ApiClient;
 use Bgultekin\CashierFastspring\Fastspring\Fastspring;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
+use Orchestra\Testbench\TestCase;
 
 /**
  * This class just tests if fastspring class works as php code and receive mocked responses.
@@ -16,7 +16,7 @@ use GuzzleHttp\Psr7\Response;
 class FastspringTest extends TestCase
 {
     public $fastspring;
-    
+
     public static function setUpBeforeClass()
     {
         if (file_exists(__DIR__.'/../.env')) {
@@ -35,13 +35,13 @@ class FastspringTest extends TestCase
         ));
 
         $handler = HandlerStack::create($mock);
-        
+
         // create instance
         $fastspring = new ApiClient();
 
         $this->fastspring = $fastspring;
         $this->fastspring->setClientOptions([
-            'handler' => $handler
+            'handler' => $handler,
         ]);
     }
 
@@ -76,8 +76,8 @@ class FastspringTest extends TestCase
             'POST',
             'something',
             ['query' => 'parameters'],
-            ['form' => 'parameters'],
-            ['json' => 'payload']
+            ['form'  => 'parameters'],
+            ['json'  => 'payload']
         );
         $this->assertObjectHasAttribute('hello', $response);
     }

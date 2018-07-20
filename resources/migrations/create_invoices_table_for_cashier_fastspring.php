@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateInvoicesTableForCashierFastspring extends Migration
 {
@@ -32,7 +32,7 @@ class CreateInvoicesTableForCashierFastspring extends Migration
             $table->datetime('subscription_period_start_date')->nullable();
             $table->datetime('subscription_period_end_date')->nullable();
             $table->timestamps();
-            
+
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }

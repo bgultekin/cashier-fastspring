@@ -5,28 +5,28 @@ namespace Bgultekin\CashierFastspring\Fastspring;
 use GuzzleHttp\Client;
 
 /**
-* ApiClient is a simple class for sending requests to FastSpring API.
-*
-* This class aims to handle some APIs of Fastspring if you think to develop
-* and add some other features please consider not doing it with one class.
-*
-* Note: This class does not cover whole FastSpring API, it covers just a couple of things
-* in FastSpring API like accounts and sessions.
-*
-* Example usage:
-* ```php
-* $fastspring = new ApiClient();
-* $accounts = $fastspring->getAccounts();
-* ```
-*
-* @package  CashierFastspring\Fastspring
-* @author   Bilal Gultekin <bilal@gultekin.me>
-* @version  0.1
-* @see      https://docs.fastspring.com/integrating-with-fastspring/fastspring-api
-*/
+ * ApiClient is a simple class for sending requests to FastSpring API.
+ *
+ * This class aims to handle some APIs of Fastspring if you think to develop
+ * and add some other features please consider not doing it with one class.
+ *
+ * Note: This class does not cover whole FastSpring API, it covers just a couple of things
+ * in FastSpring API like accounts and sessions.
+ *
+ * Example usage:
+ * ```php
+ * $fastspring = new ApiClient();
+ * $accounts = $fastspring->getAccounts();
+ * ```
+ *
+ * @author   Bilal Gultekin <bilal@gultekin.me>
+ *
+ * @version  0.1
+ *
+ * @see      https://docs.fastspring.com/integrating-with-fastspring/fastspring-api
+ */
 class ApiClient
 {
-
     /**
      * The Fastspring API Username.
      *
@@ -46,10 +46,10 @@ class ApiClient
      *
      * @var string
      */
-    public $apiBase = "https://api.fastspring.com";
+    public $apiBase = 'https://api.fastspring.com';
 
     /**
-     * Global queries to apply every requests
+     * Global queries to apply every requests.
      *
      * @var array
      */
@@ -68,26 +68,27 @@ class ApiClient
      *
      * @param string $username
      * @param string $password
+     *
      * @return void
      */
     public function __construct($username = null, $password = null)
     {
         $this->username = $username
             ? $username
-            : (getenv('FASTSPRING_USERNAME') ?: config("services.fastspring.username"));
+            : (getenv('FASTSPRING_USERNAME') ?: config('services.fastspring.username'));
         $this->password = $password
             ? $password
-            : (getenv('FASTSPRING_PASSWORD') ?: config("services.fastspring.password"));
+            : (getenv('FASTSPRING_PASSWORD') ?: config('services.fastspring.password'));
     }
 
     /**
      * Send a request to Fastspring API with given parameters.
      *
-     * @param string $method Method of HTTP request like PUT, GET, POST etc.
-     * @param string $path Path of API
-     * @param string $query Query parameters
+     * @param string $method         Method of HTTP request like PUT, GET, POST etc.
+     * @param string $path           Path of API
+     * @param string $query          Query parameters
      * @param string $formParameters Form parameters
-     * @param string $jsonPayload Json payload
+     * @param string $jsonPayload    Json payload
      *
      * @return \GuzzleHttp\Psr7\Response
      */
@@ -104,8 +105,8 @@ class ApiClient
 
         // prepare options
         $options = [
-            'auth' => [$this->username, $this->password],
-            'query' => $this->globalQuery
+            'auth'  => [$this->username, $this->password],
+            'query' => $this->globalQuery,
         ];
 
         // set parameters
@@ -114,7 +115,7 @@ class ApiClient
         if ($formParameters) {
             $options['form_params'] = $formParameters;
         }
-        
+
         if ($jsonPayload) {
             $options['json'] = $jsonPayload;
         }
@@ -130,8 +131,10 @@ class ApiClient
      * Set guzzle client options.
      *
      * @param array $options Guzzle client options
+     *
      * @see http://docs.guzzlephp.org/en/latest/quickstart.html Quickstart
      * @see http://docs.guzzlephp.org/en/latest/testing.html Testing
+     *
      * @return void
      */
     public function setClientOptions($options)
@@ -143,6 +146,7 @@ class ApiClient
      * Set global query items.
      *
      * @param array $query Queries like ['mode' => 'test']
+     *
      * @return void
      */
     public function setGlobalQuery($query)
@@ -160,18 +164,19 @@ class ApiClient
     protected function handleResponse($response)
     {
         $message = $response->getBody()->getContents();
-        
+
         // json decode
         // we assume fastspring sends always json
         return json_decode($message);
     }
 
-    # API methods
+    // API methods
 
     /**
      * Create account.
      *
      * @param array $account Account details
+     *
      * @see https://docs.fastspring.com/integrating-with-fastspring/fastspring-api/accounts  Account details
      *
      * @return object Response of fastspring
@@ -185,7 +190,8 @@ class ApiClient
      * Update account.
      *
      * @param string $fastspringId Fastspring ID of related account
-     * @param array $account Account details
+     * @param array  $account      Account details
+     *
      * @see https://docs.fastspring.com/integrating-with-fastspring/fastspring-api/accounts  Account details
      *
      * @return object Response of fastspring
@@ -194,7 +200,7 @@ class ApiClient
     {
         return $this->apiRequest('POST', implode('/', ['accounts', $fastspringId]), [], [], $account);
     }
-    
+
     /**
      * Get account list.
      *
@@ -210,8 +216,8 @@ class ApiClient
     /**
      * Get the account with the given id.
      *
-     * @param String|Integer $accountId ID of the account
-     * @param array $parameters Query Parameters
+     * @param string|int $accountId  ID of the account
+     * @param array      $parameters Query Parameters
      *
      * @return object Response of fastspring
      */
@@ -224,6 +230,7 @@ class ApiClient
      * Create session.
      *
      * @param array $session Sessions details
+     *
      * @see https://docs.fastspring.com/integrating-with-fastspring/fastspring-api/sessions  Session details
      *
      * @return object Response of fastspring
@@ -232,7 +239,7 @@ class ApiClient
     {
         return $this->apiRequest('POST', 'sessions', [], [], $session);
     }
-    
+
     /**
      * Get orders.
      *
@@ -249,6 +256,7 @@ class ApiClient
      * Get subscriptions.
      *
      * @param array $subscriptionIds Fastspring ids of subscriptions
+     *
      * @see https://docs.fastspring.com/integrating-with-fastspring/fastspring-api/subscriptions#id-/subscriptions-Getoneormoresubscriptioninstances
      *
      * @return object Response of fastspring
@@ -265,6 +273,7 @@ class ApiClient
      * Get subscription, returns one instance.
      *
      * @param array $subscriptionId Fastspring id of subscriptions
+     *
      * @see https://docs.fastspring.com/integrating-with-fastspring/fastspring-api/subscriptions#id-/subscriptions-Getoneormoresubscriptioninstances
      *
      * @return object Response of fastspring
@@ -281,6 +290,7 @@ class ApiClient
      * Update subscriptions.
      *
      * @param array $subscriptions Data of all subscriptions wanted to be updated (should include subscription => $id)
+     *
      * @see https://docs.fastspring.com/integrating-with-fastspring/fastspring-api/subscriptions#id-/subscriptions-Updateexistingsubscriptioninstances
      *
      * @return object Response of fastspring
@@ -288,15 +298,15 @@ class ApiClient
     public function updateSubscriptions($subscriptions)
     {
         return $this->apiRequest('POST', 'subscriptions', [], [], [
-            'subscriptions' => $subscriptions
+            'subscriptions' => $subscriptions,
         ]);
     }
 
     /**
      * Cancel subscription.
      *
-     * @param String|Integer $subscriptionId ID of the subscription
-     * @param array $parameters Query Parameters for example to delete immediately pass ['billingPeriod' => 0]
+     * @param string|int $subscriptionId ID of the subscription
+     * @param array      $parameters     Query Parameters for example to delete immediately pass ['billingPeriod' => 0]
      *
      * @return object Response of fastspring
      */
@@ -308,7 +318,7 @@ class ApiClient
     /**
      * Uncancel subscription.
      *
-     * @param String|Integer $subscriptionId ID of the subscription
+     * @param string|int $subscriptionId ID of the subscription
      *
      * @return object Response of fastspring
      */
@@ -317,15 +327,15 @@ class ApiClient
         return $this->updateSubscriptions([
             [
                 'subscription' => $subscriptionId,
-                'deactivation' => null
-            ]
+                'deactivation' => null,
+            ],
         ]);
     }
 
     /**
      * Get authenticated url of fastspring account management panel.
      *
-     * @param String|Integer $accountId ID of the account
+     * @param string|int $accountId ID of the account
      *
      * @return object Response of fastspring
      */
@@ -337,11 +347,11 @@ class ApiClient
     /**
      * Swap subscription to another plan.
      *
-     * @param String|Integer $subscriptionId ID of the subscription
-     * @param String $newPlan Name of the new plan
-     * @param bool $prorate Prorate parameter
-     * @param Integer $quantity Quantity of the product
-     * @param array $coupons Coupons wanted to be applied
+     * @param string|int $subscriptionId ID of the subscription
+     * @param string     $newPlan        Name of the new plan
+     * @param bool       $prorate        Prorate parameter
+     * @param int        $quantity       Quantity of the product
+     * @param array      $coupons        Coupons wanted to be applied
      *
      * @return object Response of fastspring
      */
@@ -350,11 +360,11 @@ class ApiClient
         return $this->updateSubscriptions([
             [
                 'subscription' => $subscriptionId,
-                'product' => $newPlan,
-                'quantity' => $quantity,
-                'coupons' => $coupons,
-                'prorate' => $prorate
-            ]
+                'product'      => $newPlan,
+                'quantity'     => $quantity,
+                'coupons'      => $coupons,
+                'prorate'      => $prorate,
+            ],
         ]);
     }
 }

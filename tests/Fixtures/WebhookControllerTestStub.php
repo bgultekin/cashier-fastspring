@@ -6,5 +6,4 @@ use Bgultekin\CashierFastspring\Http\Controllers\WebhookController;
 
 class WebhookControllerTestStub extends WebhookController
 {
-
 }
