@@ -18,7 +18,6 @@
 
 
 [![Packagist][badge_package]][link-packagist]
-[![Packagist Release][badge_release]][link-packagist]
 [![Build Status][badge_build]][link-build]
 [![Coverage Status][badge_coverage]][link-coverage]
 [![Style CI][badge_styleci]][link-styleci]
