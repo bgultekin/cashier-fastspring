@@ -32,7 +32,7 @@ class CashierServiceProvider extends ServiceProvider
             __DIR__.'/../resources/migrations/create_subscription_periods_table_for_cashier_fastspring.php' => sprintf(
                 database_path('migrations').'/%s_create_subscription_periods_table_for_cashier_fastspring.php',
                 date('Y_m_d_His', ++$time)
-            )
+            ),
         ]);
     }
 

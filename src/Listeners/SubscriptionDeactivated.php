@@ -24,7 +24,8 @@ class SubscriptionDeactivated extends Base
     /**
      * Handle the event.
      *
-     * @param  \Bgultekin\CashierFastspring\Events\Base  $event
+     * @param \Bgultekin\CashierFastspring\Events\Base $event
+     *
      * @return void
      */
     public function handle(Events\Base $event)

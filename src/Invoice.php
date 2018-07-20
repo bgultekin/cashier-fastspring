@@ -2,9 +2,6 @@
 
 namespace Bgultekin\CashierFastspring;
 
-use Carbon\Carbon;
-use LogicException;
-use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 
 class Invoice extends Model
@@ -25,7 +22,7 @@ class Invoice extends Model
         'created_at',
         'updated_at',
         'subscription_period_start_date',
-        'subscription_period_end_date'
+        'subscription_period_end_date',
     ];
 
     /**
@@ -45,7 +42,7 @@ class Invoice extends Model
     {
         $model = getenv('FASTSPRING_MODEL') ?: config('services.fastspring.model', 'App\\User');
 
-        $model = new $model;
+        $model = new $model();
 
         return $this->belongsTo(get_class($model), $model->getForeignKey());
     }
