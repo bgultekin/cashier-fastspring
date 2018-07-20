@@ -3,22 +3,22 @@
 [badge_package]:        https://img.shields.io/badge/package-bgultekin/cashier--fastspring-blue.svg
 [badge_release]:        https://img.shields.io/packagist/v/bgultekin/cashier-fastspring.svg
 [badge_license]:        https://img.shields.io/github/license/bgultekin/cashier-fastspring.svg
-[badge_coverage]:       https://img.shields.io/scrutinizer/coverage/g/bgultekin/cashier-fastspring.svg
-[badge_travis]:         https://img.shields.io/travis/bgultekin/cashier-fastspring.svg
+[badge_coverage]:       https://scrutinizer-ci.com/g/bgultekin/cashier-fastspring/badges/coverage.png?b=master
+[badge_build]:          https://scrutinizer-ci.com/g/bgultekin/cashier-fastspring/badges/build.png?b=master
 [badge_laravel]:        https://img.shields.io/badge/Laravel-5.x-orange.svg
 [badge_stylci]:         https://
 
-[link-contributors]:  https://github.com/bgultekin/cashier-fastspring/graphs/contributors
-[link-packagist]:     https://packagist.org/packages/bgultekin/cashier-fastspring
-[link-travis]:        https://travis-ci.org/bgultekin/cashier-fastspring
-[link-coverage]:   https://scrutinizer-ci.com/g/bgultekin/cashier-fastspring/?branch=master
-[link-license]:       https://github.com/bgultekin/cashier-fastspring/blob/master/LICENSE.md
-[link-laravel]:       https://laravel.com/
-[link-styleci]:       https://
+[link-contributors]:    https://github.com/bgultekin/cashier-fastspring/graphs/contributors
+[link-packagist]:       https://packagist.org/packages/bgultekin/cashier-fastspring
+[link-build]:           https://scrutinizer-ci.com/g/bgultekin/cashier-fastspring/build-status/master
+[link-coverage]:        https://scrutinizer-ci.com/g/bgultekin/cashier-fastspring/?branch=master
+[link-license]:         https://github.com/bgultekin/cashier-fastspring/blob/master/LICENSE.md
+[link-laravel]:         https://laravel.com/
+[link-styleci]:         https://
 
 [![Packagist][badge_package]][link-packagist]
 [![Packagist Release][badge_release]][link-packagist]
-[![Travis Status][badge_travis]][link-travis]
+[![Build Status][badge_build]][link-build]
 [![Coverage Status][badge_coverage]][link-coverage]
 [![Laravel 5][badge_laravel]][link-laravel]
 [![License][badge_license]][link-license]
