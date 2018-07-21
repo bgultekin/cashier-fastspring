@@ -393,6 +393,15 @@ class Subscription extends Model
                 // the plan is changed immediately
                 // no need to fill swap columns
 
+                // if the plan is in the trial state
+                // then delete the current period
+                // because it will change immediately
+                // but period won't update because it exists
+                if ($this->state == 'trial') {
+                    $activePeriod = $this->activePeriodOrCreate();
+                    $activePeriod->delete();
+                }
+
                 $this->plan = $plan;
                 $this->save();
             } else {
