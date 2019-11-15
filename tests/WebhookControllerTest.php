@@ -7,6 +7,7 @@ use Bgultekin\CashierFastspring\Tests\Fixtures\WebhookControllerTestStub;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Str;
 use Orchestra\Testbench\TestCase;
 
 class WebhookControllerTest extends TestCase
@@ -182,11 +183,11 @@ class WebhookControllerTest extends TestCase
             // prepare category event class names like OrderAny
             $explodedType = explode('.', $mockEvent['type']);
             $category = array_shift($explodedType);
-            $categoryEvent = 'Bgultekin\CashierFastspring\Events\\'.studly_case($category).'Any';
+            $categoryEvent = 'Bgultekin\CashierFastspring\Events\\'.Str::studly($category).'Any';
 
             // prepare category event class names like activity
             $activity = str_replace('.', ' ', $mockEvent['type']);
-            $activityEvent = 'Bgultekin\CashierFastspring\Events\\'.studly_case($activity);
+            $activityEvent = 'Bgultekin\CashierFastspring\Events\\'.Str::studly($activity);
 
             $listenEvents = [
                 Events\Any::class,
