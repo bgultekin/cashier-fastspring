@@ -20,12 +20,12 @@ class FastspringTest extends TestCase
     public static function setUpBeforeClass()
     {
         if (file_exists(__DIR__.'/.env')) {
-            $dotenv = new \Dotenv\Dotenv(__DIR__);
+            $dotenv = \Dotenv\Dotenv::create(__DIR__);
             $dotenv->load();
         }
     }
 
-    public function setUp()
+    public function setUp(): void
     {
         // prepare class for testing
         $mock = new MockHandler(array_fill(

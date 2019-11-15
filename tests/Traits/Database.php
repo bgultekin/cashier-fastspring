@@ -17,7 +17,7 @@ trait Database
         ]);
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         Schema::drop('users');
         Schema::drop('subscriptions');
