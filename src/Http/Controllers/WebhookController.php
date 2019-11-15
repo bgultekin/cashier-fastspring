@@ -16,7 +16,9 @@ class WebhookController extends Controller
     /**
      * Handle a Fastspring webhook call.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param \Illuminate\Http\Request $request The webhook requet
+     *
+     * @throws Exception
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -71,32 +73,38 @@ class WebhookController extends Controller
                 }
 
                 // trigger events
-                Event::fire(new Events\Any(
-                    $event['id'],
-                    $event['type'],
-                    $event['live'],
-                    $event['processed'],
-                    $event['created'],
-                    $event['data']
-                ));
+                Event::dispatch(
+                    new Events\Any(
+                        $event['id'],
+                        $event['type'],
+                        $event['live'],
+                        $event['processed'],
+                        $event['created'],
+                        $event['data']
+                    )
+                );
 
-                Event::fire(new $categoryEvent(
-                    $event['id'],
-                    $event['type'],
-                    $event['live'],
-                    $event['processed'],
-                    $event['created'],
-                    $event['data']
-                ));
+                Event::dispatch(
+                    new $categoryEvent(
+                        $event['id'],
+                        $event['type'],
+                        $event['live'],
+                        $event['processed'],
+                        $event['created'],
+                        $event['data']
+                    )
+                );
 
-                Event::fire(new $activityEvent(
-                    $event['id'],
-                    $event['type'],
-                    $event['live'],
-                    $event['processed'],
-                    $event['created'],
-                    $event['data']
-                ));
+                Event::dispatch(
+                    new $activityEvent(
+                        $event['id'],
+                        $event['type'],
+                        $event['live'],
+                        $event['processed'],
+                        $event['created'],
+                        $event['data']
+                    )
+                );
 
                 // add event id to successful events
                 $successfulEvents[] = $event['id'];
