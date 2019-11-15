@@ -55,11 +55,11 @@ class WebhookController extends Controller
             // prepare category event class names like OrderAny
             $explodedType = explode('.', $event['type']);
             $category = array_shift($explodedType);
-            $categoryEvent = '\Bgultekin\CashierFastspring\Events\\'.studly_case($category).'Any';
+            $categoryEvent = '\Bgultekin\CashierFastspring\Events\\'.studly($category).'Any';
 
             // prepare category event class names like activity
             $activity = str_replace('.', ' ', $event['type']);
-            $activityEvent = '\Bgultekin\CashierFastspring\Events\\'.studly_case($activity);
+            $activityEvent = '\Bgultekin\CashierFastspring\Events\\'.studly($activity);
 
             // there may be some exceptions on events
             // so if anything goes bad its ID won't be added on the successfullEvents
